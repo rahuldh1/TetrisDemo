@@ -83,7 +83,7 @@ namespace Tetris_basic
 
             scoreFont = new Font("Arial", 14, FontStyle.Bold);
             scoreBrush = new SolidBrush(Color.Red);
-            scorePoint = new PointF(GameConfig.X_COORD + GameConfig.X_WIDTH + width * 1 + 3, GameConfig.Y_COORD + height * 8);
+            scorePoint = new PointF(GameConfig.X_COORD + GameConfig.X_WIDTH + width * 1 - 3, GameConfig.Y_COORD + height * 8);
             levelPoint = new PointF(GameConfig.X_COORD + GameConfig.X_WIDTH + width * 1 + 3, GameConfig.Y_COORD + height * 10);
 
             boundaryBrush = new SolidBrush(Color.OrangeRed);
@@ -140,7 +140,7 @@ namespace Tetris_basic
             // Increase level of game (and consequently speed) dynamically based on score
             if (gameConfig.Score <= 10000)
             {
-                gameConfig.Level = gameConfig.Score / 1000;
+                gameConfig.Level = (int)(gameConfig.Score / 1000);
                 timer1.Interval = 350 - gameConfig.Level * 15;
             }
 
@@ -153,45 +153,7 @@ namespace Tetris_basic
             {
                 piece.MarkFinalPosition(filledCells, colorOfCells, gameConfig.Xcoord, gameConfig.Ycoord - 1);
 
-                for (int k = 0; k < GameConfig.Y_DIVS; k++)
-                {
-                    // Check if any row is filled
-                    bool anyRowFilled = true;
-                    for (int x = 0; x < GameConfig.X_DIVS; x++)
-                    {
-                        if (filledCells[x][k] == false)
-                        {
-                            anyRowFilled = false;
-                            break;
-                        }
-                    }
-
-                    if (anyRowFilled)
-                    {
-                        // Remove the filled line by shifting everything one row down
-                        for (int x = 0; x < GameConfig.X_DIVS; x++)
-                        {
-                            for (int y = k; y > 0; y--)
-                            {
-                                if (y == 0)
-                                {
-                                    colorOfCells[x][y] = Color.DeepSkyBlue;
-                                    filledCells[x][y] = false;
-                                }
-                                else
-                                {
-                                    colorOfCells[x][y] = colorOfCells[x][y - 1];
-                                    filledCells[x][y] = filledCells[x][y - 1];
-                                }
-                            }
-                        }
-
-                        // Increase the score by 10
-                        gameConfig.Score += 10;
-                    }
-
-                }
-
+                ClearFilledRows();
 
                 // Check if any stack has touched till top row
                 bool topRowTouched = false;
@@ -236,44 +198,7 @@ namespace Tetris_basic
                 {
                     piece.MarkFinalPosition(filledCells, colorOfCells, gameConfig.Xcoord, gameConfig.Ycoord - 1);
 
-                    for (int k = 0; k < GameConfig.Y_DIVS; k++)
-                    {
-                        // Check if any row is filled
-                        bool anyRowFilled = true;
-                        for (int x = 0; x < GameConfig.X_DIVS; x++)
-                        {
-                            if (filledCells[x][k] == false)
-                            {
-                                anyRowFilled = false;
-                                break;
-                            }
-                        }
-
-                        if (anyRowFilled)
-                        {
-                            // Remove the filled line by shifting everything one row down
-                            for (int x = 0; x < GameConfig.X_DIVS; x++)
-                            {
-                                for (int y = k; y > 0; y--)
-                                {
-                                    if (y == 0)
-                                    {
-                                        colorOfCells[x][y] = Color.DeepSkyBlue;
-                                        filledCells[x][y] = false;
-                                    }
-                                    else
-                                    {
-                                        colorOfCells[x][y] = colorOfCells[x][y - 1];
-                                        filledCells[x][y] = filledCells[x][y - 1];
-                                    }
-                                }
-                            }
-
-                            // Increase the score by 10
-                            gameConfig.Score += 10;
-                        }
-
-                    }
+                    ClearFilledRows();
 
                     piece = nextPiece;
                     Type nextPieceType = (Tetris_basic.Type)Utility.GetRandomNumber(0, GameConfig.PIECE_COUNT);
@@ -286,6 +211,55 @@ namespace Tetris_basic
                     break; // break from while loop
                 }
             }// while loop
+        }
+
+
+        private void ClearFilledRows()
+        {
+            int numFilledRows = 0;
+
+            for (int k = 0; k < GameConfig.Y_DIVS; k++)
+            {
+                // Check if any row is filled
+                bool anyRowFilled = true;
+                for (int x = 0; x < GameConfig.X_DIVS; x++)
+                {
+                    if (filledCells[x][k] == false)
+                    {
+                        anyRowFilled = false;
+                        break;
+                    }
+                }
+
+                if (anyRowFilled)
+                {
+                    numFilledRows++;
+
+                    // Remove the filled line by shifting everything one row down
+                    for (int x = 0; x < GameConfig.X_DIVS; x++)
+                    {
+                        for (int y = k; y > 0; y--)
+                        {
+                            if (y == 0)
+                            {
+                                colorOfCells[x][y] = Color.DeepSkyBlue;
+                                filledCells[x][y] = false;
+                            }
+                            else
+                            {
+                                colorOfCells[x][y] = colorOfCells[x][y - 1];
+                                filledCells[x][y] = filledCells[x][y - 1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Increase the score
+            if (numFilledRows == 1)
+                gameConfig.Score += 10;
+            else if (numFilledRows > 1)
+                gameConfig.Score = gameConfig.Score + (long)Math.Pow(10, numFilledRows);
         }
 
         public bool IsLeftPossible()
