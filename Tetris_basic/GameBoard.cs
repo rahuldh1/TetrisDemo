@@ -123,10 +123,11 @@ namespace Tetris_basic
             String drawScore = "Score : " + gameConfig.Score.ToString();
             e.Graphics.DrawString(drawScore, scoreFont, scoreBrush, scorePoint);
 
-            if (gameConfig.Score <= 1000)
+            // Increase level of game (and consequently speed) dynamically based on score
+            if (gameConfig.Score <= 10000)
             {
-                gameConfig.Level = gameConfig.Score / 100;
-                timer1.Interval = 250 - gameConfig.Level * 10;
+                gameConfig.Level = gameConfig.Score / 1000;
+                timer1.Interval = 350 - gameConfig.Level * 15;
             }
 
             String drawLevel = "Level : " + gameConfig.Level.ToString();
