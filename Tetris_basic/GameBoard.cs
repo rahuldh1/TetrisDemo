@@ -119,9 +119,7 @@ namespace Tetris_basic
             // Draw current piece
             piece.Draw(e, GameConfig.X_COORD + gameConfig.Xcoord * width, GameConfig.Y_COORD + gameConfig.Ycoord * height,
                 width, height);
-
-
-
+            
             //Draw next piece's grid
             for (int x = GameConfig.X_COORD + GameConfig.X_WIDTH + width * 1; x < GameConfig.X_COORD + GameConfig.X_WIDTH + width * 7; x += width)
                 for (int y = GameConfig.Y_COORD; y < GameConfig.Y_COORD + height * 6; y += height)
@@ -138,11 +136,12 @@ namespace Tetris_basic
             e.Graphics.DrawString(drawScore, scoreFont, scoreBrush, scorePoint);
 
             // Increase level of game (and consequently speed) dynamically based on score
-            if (gameConfig.Score <= 10000)
-            {
-                gameConfig.Level = (int)(gameConfig.Score / 1000);
-                timer1.Interval = 350 - gameConfig.Level * 15;
-            }
+            gameConfig.Level = (int)(gameConfig.Score / 1000);
+
+            if (gameConfig.Level > 10) // Restrict levels to 10
+                gameConfig.Level = 10;
+
+            timer1.Interval = 350 - gameConfig.Level * 15;            
 
             String drawLevel = "Level : " + gameConfig.Level.ToString();
             e.Graphics.DrawString(drawLevel, scoreFont, scoreBrush, levelPoint);
