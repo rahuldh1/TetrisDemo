@@ -228,34 +228,34 @@ namespace Tetris_basic
 
             if (orientation == Orientation.VERTICAL_RIGHT)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y + 1] == true))
+                if (((y > 1) && (filledCells[x - 1][y - 2] == true)) ||
+                ((y > 0) && (filledCells[x - 1][y - 1] == true)) ||
+                (filledCells[x - 1][y] == true))
                 {
                     isObstructed = true;
                 }
             }
             else if (orientation == Orientation.VERTICAL_LEFT)
             {
-                if ((filledCells[x + 1][y + 1] == true) ||
-                ((y > 0) && (filledCells[x][y - 1] == true)))
+                if (((y > 1) && (filledCells[x][y - 2] == true)) ||
+                ((y > 0) && (filledCells[x][y - 1] == true)) ||
+                (filledCells[x - 1][y] == true))
                 {
                     isObstructed = true;
                 }
             }
             else if (orientation == Orientation.HORIZONTAL_DOWN)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y] == true) ||
-                (filledCells[x + 2][y] == true))
+                if (((y > 0) && (filledCells[x - 1][y - 1] == true)) ||
+                (filledCells[x + 1][y] == true))
                 {
                     isObstructed = true;
                 }
             }
             else if (orientation == Orientation.HORIZONTAL_UP)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y + 1] == true) ||
-                (filledCells[x + 2][y + 1] == true))
+                if ((filledCells[x - 1][y] == true) ||
+                ((y > 0) && (filledCells[x - 1][y - 1] == true)))
                 {
                     isObstructed = true;
                 }
@@ -270,34 +270,37 @@ namespace Tetris_basic
 
             if (orientation == Orientation.VERTICAL_RIGHT)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y + 1] == true))
+                if (((x <= (rightBound - 2)) && (y > 1) && (filledCells[x + 2][y - 2] == true)) ||
+                ((x <= (rightBound - 1)) && (y > 0) && (filledCells[x + 1][y - 1] == true)) ||
+                ((x <= (rightBound - 1)) && (filledCells[x + 1][y] == true)))
                 {
                     isObstructed = true;
                 }
             }
             else if (orientation == Orientation.VERTICAL_LEFT)
             {
-                if ((filledCells[x + 1][y + 1] == true) ||
-                ((y > 0) && (filledCells[x][y - 1] == true)))
+                if (x <= (rightBound - 2))
                 {
-                    isObstructed = true;
+                    if (((y > 1) && (filledCells[x + 2][y - 2] == true)) ||
+                    ((y > 0) && (filledCells[x + 2][y - 1] == true)) ||
+                    (filledCells[x + 2][y] == true))
+                    {
+                        isObstructed = true;
+                    }
                 }
             }
             else if (orientation == Orientation.HORIZONTAL_DOWN)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y] == true) ||
-                (filledCells[x + 2][y] == true))
+                if (((x <= (rightBound - 3)) && (y > 0) && (filledCells[x + 3][y - 1] == true)) ||
+                ((x <= (rightBound - 3)) && (filledCells[x + 3][y] == true)))
                 {
                     isObstructed = true;
                 }
             }
             else if (orientation == Orientation.HORIZONTAL_UP)
             {
-                if ((filledCells[x][y + 1] == true) ||
-                (filledCells[x + 1][y + 1] == true) ||
-                (filledCells[x + 2][y + 1] == true))
+                if ( ((x <= (rightBound - 3)) && (filledCells[x + 3][y] == true)) ||
+                ( (x <= (rightBound - 1)) && (y > 0) && (filledCells[x + 1][y - 1] == true)))
                 {
                     isObstructed = true;
                 }
