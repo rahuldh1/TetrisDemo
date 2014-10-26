@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="GameConfig.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="IGameController.cs" />
     <Compile Include="J_Piece.cs" />
     <Compile Include="I_Piece.cs" />
     <Compile Include="L_Piece.cs" />

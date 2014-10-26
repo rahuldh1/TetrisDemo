@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace Tetris_basic
 {
-    public class GameController
+    public class GameController : IGameController
     {
         private GameBoard gameBoard;
         private GameConfig gameConfig;
@@ -30,11 +30,10 @@ namespace Tetris_basic
         public GameController(GameBoard viewParam, GameConfig gameconfigParam)
         {
             gameBoard = viewParam;
-            gameConfig = gameconfigParam;
-            gameBoard.KeyDown += new KeyEventHandler(Form1_KeyDown);
+            gameConfig = gameconfigParam;            
         }
           
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        public override void OnKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {

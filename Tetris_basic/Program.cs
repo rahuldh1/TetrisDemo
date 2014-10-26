@@ -28,13 +28,14 @@ namespace Tetris_basic
         [STAThread]
         static void Main()
         {
-            GameConfig gameconfig = new GameConfig();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            GameConfig gameconfig = new GameConfig();
             GameBoard gameBoard = new GameBoard(gameconfig);
             GameController gameController = new GameController(gameBoard, gameconfig);
+
+            gameBoard.SetGameController(gameController);
 
             Application.Run(gameBoard);
         }

@@ -32,6 +32,8 @@ namespace Tetris_basic
         private Color[][] colorOfCells;
         private bool[][] filledCells;
         private GameConfig gameConfig;
+        private IGameController gameController;
+
         private Piece piece;
         private Piece nextPiece;
         private Font scoreFont;
@@ -49,6 +51,8 @@ namespace Tetris_basic
         public GameBoard(GameConfig gameConfigParam)
         {
             InitializeComponent();
+
+            KeyDown += new KeyEventHandler(Form1_KeyDown);
 
             int width = GameConfig.X_WIDTH / GameConfig.X_DIVS;
             int height = GameConfig.Y_WIDTH / GameConfig.Y_DIVS;
@@ -96,6 +100,11 @@ namespace Tetris_basic
                 GameConfig.Y_COORD + 2,
                 width * 6 - 4, 
                 height * 6 - 4);
+        }
+
+        public void SetGameController(IGameController gameControllerParam)
+        {
+            gameController = gameControllerParam;
         }
 
         private void OnTimer(object sender, EventArgs e)
@@ -338,6 +347,11 @@ namespace Tetris_basic
                 cp.ExStyle |= 0x02000000;
                 return cp;
             }
+        }
+
+        public void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            gameController.OnKeyDown(sender, e);
         }
 
     }
