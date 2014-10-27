@@ -173,7 +173,7 @@ namespace Tetris_basic
                         break;
                     }
                 }
-                if (topRowTouched)
+                ifkty (topRowTouched)
                 {
                     // GAME OVER. Stop the painting timer.
                     timer1.Stop();
