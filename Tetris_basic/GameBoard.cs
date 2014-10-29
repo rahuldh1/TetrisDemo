@@ -129,7 +129,7 @@ namespace Tetris_basic
             piece.Draw(e, GameConfig.X_COORD + gameConfig.Xcoord * width, GameConfig.Y_COORD + gameConfig.Ycoord * height,
                 width, height);
             
-            //Draw next piece's grid
+            //Draw grid for next piece
             for (int x = GameConfig.X_COORD + GameConfig.X_WIDTH + width * 1; x < GameConfig.X_COORD + GameConfig.X_WIDTH + width * 7; x += width)
                 for (int y = GameConfig.Y_COORD; y < GameConfig.Y_COORD + height * 6; y += height)
                     Utility.DrawCell(e, x, y, width, height, Color.DeepSkyBlue);
