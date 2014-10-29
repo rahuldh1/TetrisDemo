@@ -181,7 +181,7 @@ namespace Tetris_basic
                     String drawString = "GAME OVER !!";
                     Font drawFont = new Font("Arial", 40, FontStyle.Bold);
                     SolidBrush drawBrush = new SolidBrush(Color.DarkRed);
-                    PointF drawPoint = new PointF(0.0F, 86.0F);
+                    PointF drawPoint = new PointF(0.0F, 85.0F);
                     e.Graphics.DrawString(drawString, drawFont, drawBrush, drawPoint);
                 }
 
